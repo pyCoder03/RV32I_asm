@@ -14,7 +14,9 @@
 
 void process_args(FILE *fp,struct Instruction *Ins)
 {
-    int pc,nums;
+    int i,pc,nums,len;
+    char ch;
+    struct Machine_Instruction insM;
     if(strcmp(Ins->arg[0],"org")==0)
     {
         if(Ins->narg!=1)
@@ -25,7 +27,7 @@ void process_args(FILE *fp,struct Instruction *Ins)
         }
         else
         {
-            nums=sscanf(Ins->arg[1],"%xh",&pc);
+            nums=sscanf(Ins->arg[1],"%xh",&Program_Counter);
             if(!nums)
             {
                 fprintf(stderr,"Incorrect use of \"org\" directive");
@@ -34,6 +36,31 @@ void process_args(FILE *fp,struct Instruction *Ins)
             }   
         }
     }
+    else if(strcmp(Ins->arg[0],"addi")==0)
+    {
+        insM.opcode=OP_IMM;
+        sscanf(Ins->arg[1],"x%d",&insM.rd);
+        sscanf(Ins->arg[2],"x%d",&insM.rs1);
+        len=strlen(Ins->arg[3]);
+        ch=Ins->arg[3][len-1];
+        switch(ch)
+        {
+            case 'h':
+                sscanf(Ins->arg[3],"%xh",&insM.immediate);
+                break;
+            default:
+                sscanf(Ins->arg[3],"%i",&insM.immediate);   // Since C doesn't have format specifiers for binary, %i can be used, 
+                                                            // but while writing assembly code, 0b prefix must be used  
+                break;
+        }
+        insM.funct3=ADDI;
+        write_bits_I(&insM);
+    }
+    else if(strcmp(Ins->arg[0],"nop")==0)
+    {
+        
+    }
+
 }
 
 void write_bits_R(struct Machine_Instruction *p)

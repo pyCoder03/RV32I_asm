@@ -18,7 +18,7 @@
 #define CTYPE_H
 #endif
 
-// int Program_Counter=0x0000,line=0;
+int Program_Counter=0x0000,line=0;
 
 struct Instruction{     // Instruction has the following arguments: Instruction name and operands
     int narg;           // Number of actual arguments
