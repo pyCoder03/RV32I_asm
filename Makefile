@@ -13,6 +13,7 @@ assembler: ./src/assembler.c ./lib/asm_lib.c ./lib/asm_lib.h
 SampleC:	./src/SampleC.c
 	gcc ./src/SampleC.c -o ./build/SampleC.out
 
+.PHONY: clean
 clean:
 	rm -f ./obj/*.o
 	rm -f ./build/*.out
