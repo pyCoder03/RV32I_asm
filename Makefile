@@ -1,5 +1,6 @@
 # Makefile
 
+.PHONY: all
 all:  	assembler
 
 asm_lib:	./lib/asm_lib.c ./lib/asm_lib.h
